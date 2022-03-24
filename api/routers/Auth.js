@@ -18,12 +18,12 @@ router.post('/Api/signUp', async (req, res) => {
     const password = hash;
 
     try{
-        const { fname, lname, email } = req.body;
-        const user = await User({fname, lname, email, password}).save();
+        const { username, email } = req.body;
+        const user = await User({username, email, password}).save();
 
         // create Cookie
         const token_Id = CookieByUserId(user.id);
-        const token_username = CookieByUsername(user.fname);
+        const token_username = CookieByUsername(user.username);
 
         res.cookie('_set', token_Id, {httpOnly: true, expiresIn: maxAge})
         res.cookie('__Dark', token_username, {httpOnly: true, secure: true,  expiresIn: maxAge})
